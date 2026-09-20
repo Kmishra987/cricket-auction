@@ -1,0 +1,326 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HOWZTHEBID — editorial auction house
+   Two surfaces, one system. "Paper" is the workspace: warm bone stock, ink
+   type, hairline rules. "Stage" is the broadcast: deep ink, one hot accent,
+   everything else gets out of the way.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --radius: 0.5rem;
+
+  /* paper */
+  --background: #f4f1ea;
+  --foreground: #14120f;
+  --card: #fbfaf7;
+  --card-foreground: #14120f;
+  --popover: #fbfaf7;
+  --popover-foreground: #14120f;
+  --primary: #16130f;
+  --primary-foreground: #f7f5f0;
+  --secondary: #e9e4d9;
+  --secondary-foreground: #14120f;
+  --muted: #e9e4d9;
+  --muted-foreground: #6d6559;
+  --accent: #e6e0d2;
+  --accent-foreground: #14120f;
+  --destructive: #b03424;
+  --destructive-foreground: #fbfaf7;
+  --border: #ddd5c5;
+  --input: #d3cab7;
+  --ring: #d8402a;
+
+  /* editorial extras */
+  --brand: #d8402a;
+  --brand-soft: #f3d9d1;
+  --success: #2f6b4f;
+  --hairline: color-mix(in oklab, var(--foreground) 12%, transparent);
+  --paper-tint: #ece7db;
+}
+
+.dark {
+  --background: #0c0b0a;
+  --foreground: #f2eee6;
+  --card: #141210;
+  --card-foreground: #f2eee6;
+  --popover: #161412;
+  --popover-foreground: #f2eee6;
+  --primary: #f2eee6;
+  --primary-foreground: #14120f;
+  --secondary: #1f1c18;
+  --secondary-foreground: #f2eee6;
+  --muted: #1c1916;
+  --muted-foreground: #a49a8c;
+  --accent: #232019;
+  --accent-foreground: #f2eee6;
+  --destructive: #ff5b40;
+  --destructive-foreground: #14120f;
+  --border: #2a2622;
+  --input: #322d28;
+  --ring: #ff5436;
+
+  --brand: #ff5436;
+  --brand-soft: #3a1a13;
+  --success: #4fbf8b;
+  --hairline: color-mix(in oklab, var(--foreground) 14%, transparent);
+  --paper-tint: #121010;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-success: var(--success);
+  --color-hairline: var(--hairline);
+
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-display), "Iowan Old Style", Georgia, serif;
+  --font-mono: var(--font-mono-geist), ui-monospace, "SF Mono", monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --radius-2xl: calc(var(--radius) + 14px);
+
+  --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade: fade 0.5s ease both;
+  --animate-marquee: marquee 42s linear infinite;
+  --animate-breathe: breathe 3.4s ease-in-out infinite;
+  --animate-sweep: sweep 1.6s ease-in-out infinite;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--brand);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  input, select, textarea, button { font: inherit; }
+  dialog::backdrop {
+    background: color-mix(in oklab, #0a0908 72%, transparent);
+    backdrop-filter: blur(10px) saturate(120%);
+  }
+}
+
+/* ── type utilities ─────────────────────────────────────────────────────── */
+
+@utility display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+/* Numbers are the product here, so they get the sans face at a tighter,
+   heavier setting with locked column widths. */
+@utility numeral {
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  font-weight: 550;
+  letter-spacing: -0.035em;
+}
+
+/* Small tracked caption. Replaces the mono captions across the app. */
+@utility caption {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 550;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Hairline rule that draws itself in on reveal. */
+@utility rule {
+  height: 1px;
+  width: 100%;
+  background: var(--hairline);
+  transform-origin: left;
+}
+
+/* ── motion ─────────────────────────────────────────────────────────────── */
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes breathe {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+@keyframes sweep {
+  0% { transform: translateX(-110%); }
+  100% { transform: translateX(210%); }
+}
+@keyframes slam {
+  0% { opacity: 0; transform: scale(1.5) rotate(-7deg); filter: blur(14px); }
+  55% { opacity: 1; transform: scale(0.94) rotate(-2.5deg); filter: blur(0); }
+  70% { transform: scale(1.02) rotate(-3.4deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-3deg); }
+}
+@keyframes ping-ring {
+  0% { opacity: 0.7; transform: scale(0.85); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+@keyframes burst {
+  0% { opacity: 0; transform: scale(0.4) rotate(-25deg); }
+  35% { opacity: 1; transform: scale(1.12) rotate(6deg); }
+  100% { opacity: 0; transform: scale(1.5) rotate(18deg); }
+}
+@keyframes draw {
+  from { stroke-dashoffset: var(--len, 400); }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Reveal-on-load stagger. Children fade up in sequence, no JS. */
+.stagger > * {
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.stagger > *:nth-child(1) { animation-delay: 0.04s; }
+.stagger > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger > *:nth-child(3) { animation-delay: 0.16s; }
+.stagger > *:nth-child(4) { animation-delay: 0.22s; }
+.stagger > *:nth-child(5) { animation-delay: 0.28s; }
+.stagger > *:nth-child(6) { animation-delay: 0.34s; }
+.stagger > *:nth-child(7) { animation-delay: 0.4s; }
+.stagger > *:nth-child(8) { animation-delay: 0.46s; }
+.stagger > *:nth-child(n + 9) { animation-delay: 0.52s; }
+
+/* Reveal when scrolled into view, where the browser supports it. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 22%;
+    }
+  }
+}
+
+/* ── surface texture ────────────────────────────────────────────────────── */
+
+/* Paper grain. Fine noise keeps large flat areas from reading as plastic. */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+}
+.dark .grain::before {
+  mix-blend-mode: screen;
+  opacity: 0.16;
+}
+
+/* ── link + button micro-interactions ───────────────────────────────────── */
+
+/* Underline that wipes in from the left instead of just appearing. */
+.link-sweep {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.link-sweep:hover { background-size: 100% 1px; }
+
+/* Specular pass over a primary CTA on hover. */
+.gleam { position: relative; overflow: hidden; isolation: isolate; }
+.gleam::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-110%) skewX(-18deg);
+  background: linear-gradient(90deg, transparent, color-mix(in oklab, #fff 34%, transparent), transparent);
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.gleam:hover::after { transform: translateX(210%) skewX(-18deg); }
+
+/* ── scrollbars, quiet ──────────────────────────────────────────────────── */
+
+.thin-scroll { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.thin-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+.thin-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+.thin-scroll::-webkit-scrollbar-track { background: transparent; }
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

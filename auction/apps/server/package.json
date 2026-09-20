@@ -1,0 +1,27 @@
+{
+  "name": "@auction/server",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --env-file=../../.env --watch src/index.ts",
+    "start": "bun --env-file=../../.env src/index.ts",
+    "test": "bun test src/*.test.ts",
+    "test:integration": "bun --env-file=../../.env test --timeout 120000 src/neon.integration.test.ts",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "bun src/seed.ts"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
+    "drizzle-orm": "^0.44.2",
+    "pdf-lib": "^1.17.1"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.20",
+    "@types/node": "^22.15.30",
+    "drizzle-kit": "^0.31.1",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "cricket-auction",
+  "private": true,
+  "workspaces": [
+    "apps/server",
+    "apps/web",
+    "packages/shared"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,web -c blue,magenta \"bun --env-file=.env --cwd apps/server dev\" \"bun --cwd apps/web dev\"",
+    "dev:server": "bun --env-file=.env --cwd apps/server dev",
+    "dev:web": "bun --cwd apps/web dev",
+    "db:generate": "bun --cwd apps/server db:generate",
+    "db:migrate": "bun --cwd apps/server db:migrate",
+    "db:studio": "bun --cwd apps/server db:studio",
+    "db:seed": "bun --cwd apps/server db:seed",
+    "typecheck": "bun --cwd packages/shared typecheck && bun --cwd apps/server typecheck && bun --cwd apps/web typecheck",
+    "test:integration": "bun --cwd apps/server test:integration"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "next": "^15.3.2"
+  }
+}
